@@ -7,15 +7,17 @@ def pascal_triangle(n):
     '''Creates a nested list of integers representing
     the Pascal's triangle.
     '''
-    p_triangle = []
-    if type(n) is not int or n <= 0:
-        return triangle
+    if n <= 0:
+        return []
+
+    pascal_triangle = []
     for i in range(n):
-        row = []
-        for j in range(i + 1):
-            if j == 0 or j == i:
-                row.append(1)
-            elif i > 0 and j > 0:
-                row.append(p_triangle[i - 1][j - 1] + p_triangle[i - 1][j])
-        p_triangle.append(row)
-    return p_triangle
+        row = [1]
+        if pascal_triangle:
+            last_row = pascal_triangle[-1]
+            row.extend([last_row[j] + last_row[j + 1]
+                        for j in range(len(last_row) - 1)])
+            row.append(1)
+        pascal_triangle.append(row)
+
+    return pascal_triangle
